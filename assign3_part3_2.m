@@ -13,10 +13,10 @@ addpath('navfunctions'); % Folder containing satpos + otherfunctions
 
 % obs1 = 'static1.22O';
 % nav1 = 'static1.22N';%
-obs1 = 'good\ALT30600.24O';
-nav1 = 'good\ALT30600.24N';
-% obs1 = 'kin\ALT30600.24O';
-% nav1 = 'kin\ALT30600.24N';
+% obs1 = 'good\ALT30600.24O';
+% nav1 = 'good\ALT30600.24N';
+obs1 = 'kin\ALT30600.24O';
+nav1 = 'kin\ALT30600.24N';
 
 param = OBSRNX.getDefaults();
 param.filtergnss = 'G';
@@ -145,7 +145,7 @@ for i = 1:length(data1.t) % time-counter
         p_L1 = data1.obs.G{j}(i, 1);
         phi_L1 = data1.obs.G{j}(i, 2) * lambda_L1
         phi_L2 = data1.obs.G{j}(i, 6) * lambda_L2
-        if phi_L1 == 0
+        if phi_L1 == 0 || phi_L2 == 0
             continue
         end
         MP_L1 = p_L1 - ((f1^2 + f2^2) / (f1^2 - f2^2)) * phi_L1 +  ((2 * f2^2) / (f1^2 - f2^2)) * phi_L2
@@ -158,7 +158,7 @@ for i = 1:length(data1.t) % time-counter
     
     idx = elev > elv_mask;
     
-    [pos(i,:), rec_d(i)]= LeastSquaresGPS((pr(idx)+(c*satClkCorr(idx))), satPositions(:,idx));
+    % [pos(i,:), rec_d(i)]= LeastSquaresGPS((pr(idx)+(c*satClkCorr(idx))), satPositions(:,idx));
 
 end
 %% PART 3.2
